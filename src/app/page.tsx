@@ -1,3 +1,8 @@
+
+import HomeHeadSection from "./components/home-head-section";
+
 export default function Home() {
-  return <div>Hello</div>;
+  return <div>
+    <HomeHeadSection/>
+  </div>;
 }
