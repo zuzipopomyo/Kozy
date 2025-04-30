@@ -1,68 +1,105 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import { useEffect, useRef } from "react";
 
 const Leftnavlinks = [
-  { label: "Home", tilte: "Home", href: "/" },
-  { label: "Our Menu", tilte: "Our Menu", href: "/menu" },
-  { label: "Private Event", tilte: "Private Event", href: "/privateEvent" },
+  { label: "Home", href: "/" },
+  { label: "Our Menu", href: "/menu" },
+  { label: "Private Event", href: "/privateEvent" },
 ];
 
 const RightnavLinks = [
-  { label: "Gallery", tilte: "Gallery", href: "/gallery" },
-
-  { label: "Our History", tilte: "Our History", href: "/history" },
-  { label: "Contact Us", tilte: "Contact Us", href: "/contactUs" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Our History", href: "/history" },
+  { label: "Contact Us", href: "/contactUs" },
 ];
 
 const Navbar = () => {
-  const rightLinksRef = useRef<(HTMLLIElement | null)[]>([]);
-  const leftLinksRef = useRef<(HTMLLIElement | null)[]>([]);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    gsap.from(rightLinksRef.current, {
-      opacity: 0,
-      y: -20,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: "power3.inOut",
-    });
-    gsap.from(leftLinksRef.current, {
-      opacity: 0,
-      y: -20,
-      stagger: 0.1,
-      duration: 0.5,
-      ease: "power3.Out",
-    });
-  }, []);
+    if (isMenuOpen) {
+      gsap.fromTo(
+        menuRef.current,
+        { opacity: 0, scale: 0.95 },
+        { opacity: 1, scale: 1, duration: 0.3, ease: "power3.out" }
+      );
+    } else {
+      gsap.to(menuRef.current, {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.2,
+        ease: "power3.in",
+      });
+    }
+  }, [isMenuOpen]);
+
   return (
-    <nav className="flex items-center justify-between mx-[150px] backdrop-blur-3xl mt-4 fixed top-0 left-0 right-0 z-40">
-      <ul style={{ display: "flex", gap: "20px", listStyle: "none" }}>
-        {Leftnavlinks.map((link, i) => (
-          <li key={link.href} ref={(el) => { rightLinksRef.current[i] = el; }}>
-            <Link href={link.href}>{link.label}</Link>
-          </li>
-        ))}
-      </ul>
-      <Image
-        src={"/logo.gif"}
-        width={90}
-        height={90}
-        alt=""
-        className="rounded-lg "
-      />
-      <div className="flex justify-center items-center gap-3">
-        <ul style={{ display: "flex", gap: "20px", listStyle: "none" }}>
-          {RightnavLinks.map((link, i) => (
-            <li key={link.href} ref={(el) => { rightLinksRef.current[i] = el; }}>
+    <>
+      {/* Navbar */}
+      <nav className="flex items-center justify-between px-6 md:px-[150px] py-4 fixed top-0 left-0 right-0 z-40 bg-white/60 backdrop-blur-xl">
+        {/* Left Nav (Desktop) */}
+        <ul className="hidden md:flex gap-6 list-none">
+          {Leftnavlinks.map((link) => (
+            <li key={link.href}>
               <Link href={link.href}>{link.label}</Link>
             </li>
           ))}
         </ul>
+
+        {/* Logo */}
+        <Image
+          src="/logo.gif"
+          width={70}
+          height={70}
+          alt="Logo"
+          className="rounded-lg"
+        />
+
+        {/* Right Nav (Desktop) */}
+        <ul className="hidden md:flex gap-6 list-none">
+          {RightnavLinks.map((link) => (
+            <li key={link.href}>
+              <Link href={link.href}>{link.label}</Link>
+            </li>
+          ))}
+        </ul>
+
+        {/* Burger Menu Icon (Mobile + md only) */}
+        <button
+          className="md:hidden flex flex-col gap-1 z-50"
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          <span className="w-6 h-0.5 bg-black" />
+          <span className="w-6 h-0.5 bg-black" />
+          <span className="w-6 h-0.5 bg-black" />
+        </button>
+      </nav>
+
+      {/* Mobile Dropdown Menu */}
+      <div
+        ref={menuRef}
+        className={`fixed top-20 left-4 right-4 bg-white rounded-xl shadow-xl p-6 z-30 md:hidden ${
+          isMenuOpen ? "block" : "hidden"
+        }`}
+      >
+        <ul className="flex flex-col gap-4 text-center text-lg">
+          {[...Leftnavlinks, ...RightnavLinks].map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </div>
-    </nav>
+    </>
   );
 };
 
