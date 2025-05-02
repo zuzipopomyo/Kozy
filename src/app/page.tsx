@@ -1,14 +1,10 @@
 
 import HomeHeadSection from "./components/home-head-section";
+import PopularDrinkSection from "./components/popular-drink-section";
 
 export default function Home() {
-<<<<<<< HEAD
   return <div>
-    <HomeHeadSection/>
+    <HomeHeadSection />
+  <PopularDrinkSection/>
   </div>;
-=======
-  return <>
-  
-  </>;
->>>>>>> 8148b6697e4af2dfbdad9efb1bb9c3dc2af8eba5
 }

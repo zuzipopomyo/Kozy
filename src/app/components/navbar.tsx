@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 "use client";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +15,6 @@ const RightnavLinks = [
   { label: "Our History", href: "/history" },
   { label: "Contact Us", href: "/contactUs" },
 ];
->>>>>>> 8148b6697e4af2dfbdad9efb1bb9c3dc2af8eba5
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,7 +40,7 @@ const Navbar = () => {
   return (
     <>
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 md:px-[150px] py-4 fixed top-0 left-0 right-0 z-40 bg-white/60 backdrop-blur-xl">
+      <nav className="flex items-center justify-between px-6 md:px-[150px] py-4 fixed top-0 left-0 right-0 z-40 bg-white/60 backdrop-blur-xl bg-blue-200">
         {/* Left Nav (Desktop) */}
         <ul className="hidden md:flex gap-6 list-none">
           {Leftnavlinks.map((link) => (
