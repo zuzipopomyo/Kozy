@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 "use client";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +15,6 @@ const RightnavLinks = [
   { label: "Our History", href: "/history" },
   { label: "Contact Us", href: "/contactUs" },
 ];
->>>>>>> 8148b6697e4af2dfbdad9efb1bb9c3dc2af8eba5
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
